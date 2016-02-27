@@ -1,0 +1,65 @@
+﻿@model Model.EF.TbMT
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <title>Thêm môn thi</title>
+</head>
+<body>
+
+    @section header{
+        <h1>
+            Thêm môn thi
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Thêm môn thi</li>
+        </ol>
+    }
+    @using (Html.BeginForm("Create","Object", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Điền thông tin môn thi</legend>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TenMT)
+            </div>
+            <div class="row">
+               
+                <div class="editor-field">
+                    <div class="col-xs-5">
+                        @Html.TextBoxFor(model => model.TenMT, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TenMT)
+                    </div>
+                </div>
+                </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TrangThai)
+            </div>
+            <div class="row">
+
+                <div class="editor-field">
+                    <div class="col-xs-5">
+                        @Html.CheckBoxFor(model => model.TrangThai, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TrangThai)
+                    </div>
+                </div>
+            </div>
+            <br />
+                <p>
+                    <input type="submit" value="Thêm" class="btn btn-primary" />
+                </p>
+</fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

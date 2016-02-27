@@ -1,0 +1,159 @@
+﻿@model Model.EF.TbStudent
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <title>Sửa thông tin học sinh</title>
+</head>
+<body>
+    @section header{
+        <h1>
+            Sửa thông tin học sinh
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Sửa thông tin học sinh</li>
+        </ol>
+    }
+
+    @section jsFooter{
+        <script>
+            $(document).ready(function () {
+
+                $('#btnSelectImage').on('click', function () {
+                    var finder = new CKFinder();
+                    finder.selectActionFunction = function (url) {
+                        $('#txtImage').val(url);
+                    };
+                    finder.popup();
+                })
+            })
+        </script>
+    }
+
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+       <fieldset>
+            <legend>Nhập thông cần sửa</legend>
+           <div class="editor-label">
+               @Html.HiddenFor(model => model.ID)
+           </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Username)
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @readonly="readonly"})
+                            @Html.ValidationMessageFor(model => model.Username)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Password)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" }) <a class="text-danger">* Để trống nếu muốn giữ nguyên</a>
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Ho)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.TextBoxFor(model => model.Ho, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Ho)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Ten)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.TextBoxFor(model => model.Ten, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Ten)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.NgaySinh)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.TextBoxFor(model => model.NgaySinh,"{0:yyyy-MM-dd}", new { @class = "form-control", type="date"})
+                            @Html.ValidationMessageFor(model => model.NgaySinh)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.GioiTinh)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.EditorFor(model => model.GioiTinh, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.GioiTinh)
+                        </div>
+                    </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Active)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.EditorFor(model => model.Active, new { @class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.Active)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Thi)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.EditorFor(model => model.Thi, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Thi)
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.TextBoxFor(model => model.Avatar, new { @class = "form-control", @id = "txtImage" })
+                            <a id="btnSelectImage">Chọn ảnh</a>
+                            @Html.ValidationMessageFor(model => model.Avatar)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <p>
+                <input type="submit" value="Sửa" class="btn btn-primary" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Quay lại danh sách", "Index")
+    </div>
+
+</body>
+</html>

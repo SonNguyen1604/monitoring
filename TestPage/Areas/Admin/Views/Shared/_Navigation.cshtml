@@ -1,0 +1,123 @@
+﻿<aside class="left-side sidebar-offcanvas">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="../../Content/img/avatar.jpg" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+                <p>Xin chào, @Session["userlogin"]</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..." />
+                <span class="input-group-btn">
+                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            @*<li class="active">
+                <a href="../Profile/Index">
+                    <i class="fa fa-male"></i> <span>Trang cá nhân</span>
+                </a>
+            </li>*@
+
+            <li class="active">
+                <a href="../Baithi/Index">
+                    <i class="fa fa-male"></i> <span>Danh sách bài thi</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user"></i>
+                    <span>Quản lý người dùng</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../User/Index"><i class="fa fa-angle-double-right"></i> Danh sách người dùng</a></li>
+                    <li><a href="../User/Create"><i class="fa fa-angle-double-right"></i> Thêm mới</a></li>
+                </ul>
+            </li>
+          
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-book" ></i>
+                    <span>Môn thi</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../Object/Index"><i class="fa fa-angle-double-right"></i> Danh sách môn thi</a></li>
+                    <li><a href="../Object/Create"><i class="fa fa-angle-double-right"></i> Thêm môn thi</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-level-up"></i>
+                    <span>Cấp độ thi</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../Level/Index"><i class="fa fa-angle-double-right"></i> Các cấp độ</a></li>
+                    <li><a href="../Level/Create"><i class="fa fa-angle-double-right"></i> Thêm cấp độ</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-tag"></i> <span>Đề thi</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../Exam/Index"><i class="fa fa-angle-double-right"></i> Danh sách đề thi</a></li>
+                    <li><a href="../Exam/Create"><i class="fa fa-angle-double-right"></i> Thêm đề thi</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-table"></i> <span>Đợt thi</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../Dt/Index"><i class="fa fa-angle-double-right"></i>Danh sách đợt thi</a></li>
+                    <li><a href="../Dt/Create"><i class="fa fa-angle-double-right"></i> Tạo đợt thi mới</a></li>
+                </ul>
+            </li>
+            @*<li>
+                <a href="../calendar.html">
+                    <i class="fa fa-calendar"></i> <span>Calendar</span>
+
+                </a>
+            </li>
+            <li>
+                <a href="../mailbox.html">
+                    <i class="fa fa-envelope"></i> <span>Mailbox</span>
+
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-folder"></i> <span>Examples</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="../examples/invoice.html"><i class="fa fa-angle-double-right"></i> Invoice</a></li>
+                    <li><a href="../examples/login.html"><i class="fa fa-angle-double-right"></i> Login</a></li>
+                    <li><a href="../examples/register.html"><i class="fa fa-angle-double-right"></i> Register</a></li>
+                    <li><a href="../examples/lockscreen.html"><i class="fa fa-angle-double-right"></i> Lockscreen</a></li>
+                    <li><a href="../examples/404.html"><i class="fa fa-angle-double-right"></i> 404 Error</a></li>
+                    <li><a href="../examples/500.html"><i class="fa fa-angle-double-right"></i> 500 Error</a></li>
+                    <li><a href="../examples/blank.html"><i class="fa fa-angle-double-right"></i> Blank Page</a></li>
+                </ul>
+            </li>*@
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

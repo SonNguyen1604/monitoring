@@ -1,0 +1,47 @@
+﻿@model Model.EF.TbStudent
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <!-- Top Navigation -->
+    <div class="banner banner5">
+        <div class="container">
+            <h2>Thông tin người dùng</h2>
+        </div>
+    </div>
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng nhập</title>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="../Content/AdminLTE.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-black">
+    <div class="form-box" >
+
+        <fieldset id="body">
+            <fieldset>
+                <h3>Tên tài khoản: @Model.Username</h3>
+            </fieldset>
+            <fieldset>
+                <h3>Họ tên: @Model.Ho @Model.Ten</h3>
+             
+            </fieldset>
+            <fieldset>
+                <h3>Ngày sinh: @Model.NgaySinh.ToString("dd/MM/yyyy")</h3>
+            </fieldset>
+            <fieldset>
+                <h3>Giới tính: @(Model.GioiTinh?"Nam":"Nữ")</h3>
+            </fieldset>
+           <a href="../User/Edit?id=@ViewBag.id">Chỉnh sửa thông tin cá nhân</a>
+            <br /><br /><br /><br />
+        </fieldset>
+</div>
+</body>
+</html>

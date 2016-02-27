@@ -1,0 +1,111 @@
+﻿@model PagedList.IPagedList<Model.EF.TbBaiThi>
+@using PagedList.Mvc;
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    }
+
+    @section header{
+        <h1>
+            Bài thi
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active"> Bài thi</li>
+        </ol>
+    }
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+    @using (Html.BeginForm("Index", "BaiThi", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="btn-group">
+                    <div class="input-group margin">
+                        <input type="text" class="form-control" value="@ViewBag.SearchString" name="searchString" placeholder="Nhập mã đề, tên đề thi để tìm kiếm...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-flat" type="submit">Tìm</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Danh sách bài thi</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body table-responsive">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã bài thi</th>
+                                <th>Mã thí sinh</th>
+                                <th>Mã đề thi</th>
+                                <th>Bài thi</th>
+                                <th>Webcam</th>
+                                <th>Màn hình</th>
+                                <th>Âm thanh</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="row_@item.MaBaiThi">
+
+                                  <td>@item.MaBaiThi</td>
+                                    <td>@item.ID</td>
+                                    <td>@item.MaDeThi</td>
+                                    <td><a href="@item.DuongDanBT">BT</a></td>
+                                    @*<td><a href="@item.DuongDanWC">WC</a></td>*@
+                                    <td><video controls src="@item.DuongDanWC" height="240px" width="320px"></video></td>
+                                    <td><video controls src="@item.DuongDanMH" height="270px" width="480px"></video></td>
+                                    @*<td><a href="@item.DuongDanMH">MH</a></td>*@
+                                    @*<td><a href="@item.DuongDanAT">AT</a></td>*@
+                                    <td><audio controls src="@item.DuongDanAT"></audio></td>
+                                    <td>
+                                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.MaBaiThi }, new AjaxOptions
+                               {
+                                   Confirm = "Bạn có chắc chắn muốn xóa?",
+                                   OnComplete = "$('#row_" + @item.MaBaiThi + "').remove()",
+                                   HttpMethod = "Delete"
+                               })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Mã bài thi</th>
+                                <th>Mã thí sinh</th>
+                                <th>Mã đề thi</th>                      
+                                <th>Bài thi</th>
+                                <th>Webcam</th>
+                                <th>Màn hình</th>
+                                <th>Âm thanh</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="col-lg-6">
+                        <div class="dataTables_info"></div>
+                    </div>
+                    <div class="col-lg-6">
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+</body>
+</html>

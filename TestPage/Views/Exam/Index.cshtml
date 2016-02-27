@@ -1,0 +1,204 @@
+﻿@model PagedList.IPagedList<Model.ViewModels.ExamViewModel>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <!-- Top Navigation -->
+    <div class="banner banner5">
+        <div class="container">
+            <h2>Thi</h2>
+        </div>
+    </div>
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng nhập</title>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="../Content/AdminLTE.css" rel="stylesheet" type="text/css" />
+
+    <script src="../Scripts/Record/RecordRTC.js"></script>
+    <script src="../Scripts/Record/getScreenID.js"></script>
+    <!-- for Edige/FF/Chrome/Opera/etc. getUserMedia support -->
+    <script src="https://cdn.rawgit.com/webrtc/adapter/master/adapter.js"></script>
+    <script>
+        document.createElement('article');
+        document.createElement('footer');
+    </script>
+</head>
+<body class="bg-black">
+    @{
+        var session = (TestPage.Common.UserLogin)Session[TestPage.Common.CommonConstant.USER_SESSION];
+    }
+
+    @using (Html.BeginForm("Valid", "Exam", FormMethod.Get))
+    {
+        var y = 0;
+        <div class="typrography">
+            <div class="container">
+                <div class="grid_3 grid_4">
+                    <h3 class="first">Danh sách đề thi</h3>
+                    <div class="bs-docs-example">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th><h4>Số TT</h4></th>
+                                    <th><h4>Mã đề</h4></th>
+                                    <th><h4>Tên đề</h4></th>
+                                    <th><h4>Môn thi</h4></th>
+                                    <th><h4>Cấp độ</h4></th>
+                                    <th><h4>Đợt thi</h4></th>
+                                    <th id="@(y-1)" hidden><h4>Đường dẫn</h4></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr id="row_@item.MaDeThi">
+                                        <td><h4>@(y + 1)</h4></td>
+                                        <td><h4>@item.MaDeThi</h4></td>
+                                        <td><h4>@item.TenDeThi</h4></td>
+                                        <td><h4>@item.TenMT</h4></td>
+                                        <td><h4>@item.Capdo</h4></td>
+                                        <td><h4>@item.Dotthi</h4></td>
+                                        <td id="@y" hidden><h4><a href="@item.Duongdan">Download</a></h4></td>
+                                        <td hidden>@(y = y + 1)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-2"><input type="button" id="login" value="Bắt đầu" class=" btn bg-blue flat btn-block" onclick="f1()"></div>
+        <div class="col-md-8"></div>
+        <div class="col-md-2"> <button id="go" type="button" class="btn bg-blue flat btn-block" onclick="nopbai()">Nộp bài</button></div>
+
+    }
+      
+        <script>
+
+            function nopbai() {
+                window.open("../Submit/Index")
+            }
+
+            $('#recordscreen').click(function () {
+                if (this.id == 'recordscreen') {
+                    document.getElementById('login').removeAttribute("disabled");
+                }
+            });
+
+            var c = @ViewBag.count
+            $('#login').click(function () {
+                if (this.id == 'login') {
+                    for (i = -1; i <= c ; i++) {
+                        document.getElementById(i).removeAttribute("hidden");
+                    }
+
+                }
+            });
+        </script>
+
+        <div class="form-box" id="login-box">
+            <div>
+                <table width="100%" align="center">
+                    <tr>
+                        <td>
+                            <h3><span id="starttime"></span></h3>
+
+                            <div id="endtime"></div>
+
+                            <h3><span id="showtime"></span></h3>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        @*<td><button id="go1" type="submit" class="btn bg-blue flat" onclick="f1()">Nộp bài</button></td>*@
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <script>
+
+            //$('#go').click(function () {
+            //    if (this.id == 'go') {
+            //        document.getElementById('go1').disabled = true;
+            //    }
+            //});
+
+
+            var tim;
+
+            var min = 60;
+            var sec = 00;
+            var f = new Date();
+            function f1() {
+                f2();
+
+                if (parseInt(f.getMinutes()) < 10)
+                    document.getElementById("starttime").innerHTML = "Bài thi bắt đầu lúc " + f.getHours() + ":0" + f.getMinutes();
+                else
+                    document.getElementById("starttime").innerHTML = "Bài thi bắt đầu lúc " + f.getHours() + ":" + f.getMinutes();
+
+            }
+            function f2() {
+                if (parseInt(sec) > 0) {
+                    sec = parseInt(sec) - 1;
+                    if (sec < 10) {
+                        document.getElementById("showtime").innerHTML = "Thời gian còn lại: " + min + ":0" + sec;
+                    }
+                    else
+                        document.getElementById("showtime").innerHTML = "Thời gian còn lại: " + min + ":" + sec;
+
+                    tim = setTimeout("f2()", 1000);
+                }
+                else {
+                    if (parseInt(sec) == 0) {
+                        min = parseInt(min) - 1;
+
+                        if (parseInt(min) == -1) {
+                            clearTimeout(tim);
+                            // location.href = "default5.aspx";
+                            document.getElementById('go').disabled = true;
+
+                            window.location = "../Exam/Annoucement";
+                        }
+
+                        else {
+                            sec = 59;
+                            document.getElementById("showtime").innerHTML = "Thời gian còn lại: " + min + ":" + sec;
+
+                            tim = setTimeout("f2()", 1000);
+                        }
+                    }
+                }
+            }
+
+            //window.onbeforeunload = function (e) {
+            //    e = e || window.event;
+
+            //    if (e) {
+            //        e.returnValue = 'Bạn vẫn đang làm bài thi, nếu đóng tab bài thi sẽ không được tính.';
+            //    }
+
+
+            //    return 'Bạn vẫn đang làm bài thi, nếu đóng tab bài thi sẽ không được tính.';
+
+            //};
+        </script>
+
+
+
+        <br /><br /><br /><br />
+</body>
+</html>

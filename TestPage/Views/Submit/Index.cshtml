@@ -1,0 +1,117 @@
+﻿@model TestPage.Models.BtModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <!-- Top Navigation -->
+    <div class="banner banner5">
+        <div class="container">
+            <h2>Nộp bài</h2>
+        </div>
+    </div>
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="../Content/AdminLTE.css" rel="stylesheet" type="text/css" />
+
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="../../Content/ionicons.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="bg-black" onload="loaded()">
+    @{
+        var session = (TestPage.Common.UserLogin)Session[TestPage.Common.CommonConstant.USER_SESSION];
+    }
+    <div class="form-box" id="login-box">
+        @if (TempData["AlertMessage"] != null)
+        {
+            <div class="alert @TempData["AlertType"]">
+                <i class="fa fa-check"></i>
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                @TempData["AlertMessage"]
+            </div>
+        }
+
+        @using (Html.BeginForm("Create",
+                        "Submit",
+                        FormMethod.Post))
+        {
+            <h3>
+                <label for="file">Nộp bài thi</label>
+            </h3>
+            <div class="editor-label">
+                Chọn đề thi mà bạn muốn nộp
+            </div>
+            <br />
+            <div class="row">
+                <div class="editor-field">
+                    <div class="col-xs-12">
+                        @Html.DropDownListFor(model => model.MaDeThi, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.MaDeThi)
+                    </div>
+                </div>
+            </div>
+            <div class="row" hidden>
+                <div class="editor-field">
+                    <div class="col-xs-5">
+                        @Html.TextBoxFor(model => model.DuongDanBT, new { @class = "form-control", Value = ViewBag.BT })
+                        @Html.ValidationMessageFor(model => model.MaDeThi)
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" hidden>
+                <div class="editor-field">
+                    <div class="col-xs-5">
+                        @Html.TextBoxFor(model => model.ID, new { @class = "form-control", Value = session.UserID })
+                        @Html.ValidationMessageFor(model => model.MaDeThi)
+                    </div>
+                </div>
+
+            </div><br />
+            <div class="row">
+                <button type="submit" class="btn btn-primary btn-flat btn btn-block">Nộp bài</button>
+            </div>
+            <br />
+
+        }
+
+        @using (Html.BeginForm("Index", "Submit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <input type="file" name="files" value="" multiple="multiple" class="btn btn-flat btn-primary" />
+            </div><br />
+            <div class="row">
+
+                <input type="submit" value="Tải lên" title="Upload" class="btn btn-flat btn-primary" />
+                <div style="color:Red;font-size:14px">@ViewBag.Message</div>
+            </div>
+        }
+
+    </div>
+
+    <script>
+                function loaded()
+                {
+                    window.setTimeout(Close, 60000);
+                }
+                function Close() {
+                    window.close();
+                }
+        </script>
+    <br /><br /><br /><br />
+</body>
+
+</html>

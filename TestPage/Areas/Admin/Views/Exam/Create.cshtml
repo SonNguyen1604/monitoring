@@ -1,0 +1,143 @@
+﻿@model Model.EF.TbDeThi
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<html>
+<head>
+    <title>Thêm đề thi</title>
+</head>
+<body>
+    @section header{
+        <h1>
+            Thêm đề thi
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Thêm đề thi</li>
+        </ol>
+    }
+
+    @section jsFooter{
+        <script>
+            $(document).ready(function () {
+
+                $('#btnSelectImage').on('click', function () {
+                    var finder = new CKFinder();
+                    finder.selectActionFunction = function (url) {
+                        $('#txtImage').val(url);
+                    };
+                    finder.popup();
+                })
+            })
+        </script>
+    }
+
+
+
+    @using (Html.BeginForm("Create", "Exam", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Thêm đề thi</legend>
+
+            <div class="editor-label">
+                <b>Mã đề thi sẽ được sinh tự động</b>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.HiddenFor(model => model.MaDeThi, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaDeThi)
+                        </div>
+                    </div>
+                </div><br/>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.TenDeThi)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.TextBoxFor(model => model.TenDeThi, null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TenDeThi)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaMT)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.DropDownListFor(model => model.MaMT,null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaMT)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaCD)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.DropDownListFor(model => model.MaCD,null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaCD)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.MaDT)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.DropDownListFor(model => model.MaDT,null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MaDT)
+                        </div>
+                    </div>
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.DuongDanDT)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.TextBoxFor(model => model.DuongDanDT, new { @class = "form-control", @id = "txtImage" })
+                            <a id="btnSelectImage">Chọn bài thi</a>
+                            @Html.ValidationMessageFor(model => model.DuongDanDT)
+                        </div>
+                    </div>
+                </div>   
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.TrangThai)
+                </div>
+                <div class="row">
+                    <div class="editor-field">
+                        <div class="col-xs-5">
+                            @Html.EditorFor(model => model.TrangThai, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.TrangThai)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+            <p>
+                <input type="submit" value="Thêm" class="btn btn-primary"  />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿@model Model.EF.TbMT
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <title>Sửa thông tin môn thi</title>
+</head>
+<body>
+    @section header{
+        <h1>
+            Sửa thông tin môn thi
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Sửa thông tin môn thi</li>
+        </ol>
+    }
+
+    @using (Html.BeginForm("Edit","Object", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Nhập thông tin cần sửa</legend>
+
+            @Html.HiddenFor(model => model.MaMT)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TenMT)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.TenMT, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TenMT)
+            </div>
+
+            <p>
+                <input type="submit" value="Sửa" class="btn btn-primary" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+﻿@model TestPage.Models.RegisterModel
+@using BotDetect.Web.UI.Mvc;
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ MvcCaptcha RegisterCaptcha = new MvcCaptcha("RegisterCaptcha"); }
+@section header{
+    <!-- Top Navigation -->
+    <div class="banner banner5">
+        <div class="container">
+            <h2>Đăng ký</h2>
+        </div>
+    </div>
+}
+<html>
+<head>
+    <title>Đăng ký</title>
+
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+          rel="stylesheet" type="text/css" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="../Content/AdminLTE.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-black">  
+    <div class="form-box" id="login-box">
+        @using (Html.BeginForm("Register", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false)
+            if (ViewBag.Success != null)
+            {
+                <div class="alert alert-success">@ViewBag.Success
+                    <i class="fa fa-check"></i>
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>
+             
+            }
+
+            <fieldset id="body">
+                <fieldset>
+                    <h4>Tên tài khoản</h4>
+                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Nhập tên tài khoản..." })
+                    @Html.ValidationMessageFor(model => model.Username)
+                </fieldset>
+                <fieldset>
+                    <h4>Mật khẩu</h4>
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu..." })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </fieldset>
+                <fieldset>
+                    <h4>Nhắc lại mật khẩu</h4>
+                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Nhắc lại mật khẩu..." })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                </fieldset>
+                <fieldset>
+                    <h4>Họ</h4>
+                    @Html.TextBoxFor(model => model.Ho, new { @class = "form-control", placeholder = "Nhập họ..." })
+                    @Html.ValidationMessageFor(model => model.Ho)
+                </fieldset>
+                <fieldset>
+                    <h4>Tên</h4>
+                    @Html.TextBoxFor(model => model.Ten, new { @class = "form-control", placeholder = "Nhập tên..." })
+                    @Html.ValidationMessageFor(model => model.Ten)
+                </fieldset>
+                <fieldset>
+                    <h4>Ngày sinh</h4>
+                    @Html.TextBoxFor(model => model.NgaySinh, new { @class = "form-control", type = "date" })
+                    @Html.ValidationMessageFor(model => model.NgaySinh)
+                </fieldset>
+                <fieldset>
+                    <h4>Giới tính</h4>
+                    @Html.EditorFor(model => model.GioiTinh, new { @class = "form-control" }) Đánh dấu nếu là nam
+                    @Html.ValidationMessageFor(model => model.GioiTinh)
+                </fieldset>
+                <fieldset>
+                    <h4>Captcha</h4>
+                    @Html.Captcha(RegisterCaptcha)
+                    @Html.TextBox("CaptchaCode", null, new { @class = "form-control" })
+                </fieldset>
+                <br />
+                <form>
+                    <input type="submit" id="login" value="Đăng ký" class="btn bg-blue btn-block flat">
+
+                </form>
+            </fieldset>
+        }
+    </div>
+    <br /><br /><br /><br /><br />
+</body>
+</html>

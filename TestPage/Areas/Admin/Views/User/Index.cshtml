@@ -1,0 +1,124 @@
+﻿@model PagedList.IPagedList<Model.EF.TbStudent>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <h1>
+        Danh sách người dùng
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Danh sách người dùng</li>
+    </ol>
+}
+
+@section jsFooter{
+    <script src="../../Scripts/controller/userController.js"></script>
+}
+
+@using(Html.BeginForm("Index","User",FormMethod.Get))
+{
+<div class="row">
+    <div class="col-lg-8">
+        <div class="btn-group">
+            <div class="input-group margin">
+                <input type="text" class="form-control" value="@ViewBag.SearchString" name="searchString" placeholder="Nhập tên tài khoản, họ, tên để tìm kiếm...">
+                <span class="input-group-btn">
+                    <button class="btn btn-info btn-flat" type="submit">Tìm</button>
+                    <a type="button" class="btn btn-primary btn-flat" href="../User/Create">Thêm mới</a>
+                </span>
+            </div><!-- /input-group -->
+        </div>
+    </div>
+</div>
+}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="btn-group">
+                <div class="input-group margin">
+                    <a type="button" class="btn btn-primary btn-flat" href="../User/Index">Hiển thị tất cả</a>
+                    <a type="button" class="btn btn-primary btn-flat" href="../User/Active">Hiển thị active</a>
+                </div><!-- /input-group -->
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Danh sách người dùng</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive" id="tableUser">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                          <th>ID</th>
+                            <th>Tên tài khoản</th>
+                            <th>Họ</th>
+                            <th>Tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
+                            <th>Trạng thái</th>
+                            <th>Thi</th>
+                            <th>Ảnh đại diện</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.ID">
+                              <td>@item.ID</td>
+                                <td>@item.Username</td>
+                                <td>@item.Ho</td>
+                                <td>@item.Ten</td>
+                                <td>@item.NgaySinh.ToShortDateString()</td>
+                                <td>@(item.GioiTinh ? "Nam":"Nữ")</td>
+                                <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Active ? "Kích hoạt" : "Khóa")</a></td>
+                                <td><a href="#" class="btn-thi" data-id="@item.ID">@(item.Thi ? "Đã thi":"Chưa thi")</a></td>
+                                <td>@item.Avatar</td>
+                                <td>
+                                    <a href="/Admin/User/Edit?id=@item.ID">Sửa</a>
+                                    @*|
+                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                               {
+                                   Confirm = "Bạn có chắc chắn muốn xóa?",
+                                   OnSuccess = "$('#row_" + @item.ID + "').remove()",
+                                //   OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                   OnFailure = "handleError",
+                                   HttpMethod = "Delete"
+                               })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên tài khoản</th>
+                            <th>Họ</th>
+                            <th>Tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
+                            <th>Trạng thái</th>
+                            <th>Thi</th>
+                            <th>Ảnh đại diện</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="col-lg-6">
+                    <div class="dataTables_info"></div>
+                </div>
+                <div class="col-lg-6">
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page,@searchString=@ViewBag.SearchString }))
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</div>

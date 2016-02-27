@@ -1,0 +1,108 @@
+﻿@model PagedList.IPagedList<Model.EF.TbCapdo>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <h1>
+        Cấp độ thi
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Cấp độ thi</li>
+    </ol>
+}
+
+@section jsFooter{
+    <script src="../../Scripts/controller/levelController.js"></script>
+}
+
+@using (Html.BeginForm("Index", "Level", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="btn-group">
+                <div class="input-group margin">
+                    <input type="text" class="form-control" value="@ViewBag.SearchString" name="searchString" placeholder="Nhập mã cấp độ, tên cấp độ để tìm kiếm...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-info btn-flat" type="submit">Tìm</button>
+                        <a type="button" class="btn btn-primary btn-flat" href="../Level/Create">Thêm mới</a>
+                    </span>
+                </div><!-- /input-group -->
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="btn-group">
+            <div class="input-group margin">
+                <a type="button" class="btn btn-primary btn-flat" href="../Level/Index">Hiển thị tất cả</a>
+                <a type="button" class="btn btn-primary btn-flat" href="../Level/Active">Hiển thị active</a>
+            </div><!-- /input-group -->
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Danh sách cấp độ</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body table-responsive">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Mã cấp độ</th>
+                            <th>Cấp độ</th>
+                            <th>Trạng thái</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.MaCD">
+
+                                <td>@item.MaCD</td>
+                                <td>@item.TenCD</td>
+                                <td><a href="#" class="btn-activeLevel" data-id="@item.MaCD">@(item.TrangThai ? "Kích hoạt" : "Khóa")</a></td>
+
+                                <td>
+                                    <a href="/Admin/Level/Edit?id=@item.MaCD">Sửa</a>
+                                    @*|
+                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.MaCD }, new AjaxOptions
+                               {
+                                   Confirm = "Bạn có chắc chắn muốn xóa?",
+                                   OnComplete = "$('#row_" + @item.MaCD + "').remove()",
+                                   HttpMethod = "Delete"
+                               })*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Mã cấp độ</th>
+                            <th>Cấp độ</th>
+                            <th>Trạng thái</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="col-lg-6">
+                    <div class="dataTables_info"></div>
+                </div>
+                <div class="col-lg-6">
+                    @Html.PagedListPager(Model, page => Url.Action("Active", new { page, @searchString = @ViewBag.SearchString }))
+                </div>
+            </div><!-- /.box-body -->
+        </div><!-- /.box -->
+    </div>
+</div>

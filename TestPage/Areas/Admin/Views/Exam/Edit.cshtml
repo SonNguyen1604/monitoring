@@ -1,0 +1,92 @@
+﻿@model Model.EF.TbDeThi
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <title>Sửa thông tin đề thi</title>
+</head>
+<body>
+    @section header{
+        <h1>
+            Sửa thông tin đề thi
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Sửa thông tin đề thi</li>
+        </ol>
+    }
+
+    @using (Html.BeginForm("Edit","Exam",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Sửa thông tin đề thi</legend>
+
+            @Html.TextBoxFor(model => model.MaDeThi, new { @class = "form-control", Value = @ViewBag.id })
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TenDeThi)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.TenDeThi, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TenDeThi)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MaMT)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.MaMT,null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaMT)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MaCD)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.MaCD,null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaCD)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MaDT)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.MaDT, null, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MaDT)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.DuongDanDT)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.DuongDanDT, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DuongDanDT)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TrangThai)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.TrangThai, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TrangThai)
+            </div>
+
+            <p>
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>

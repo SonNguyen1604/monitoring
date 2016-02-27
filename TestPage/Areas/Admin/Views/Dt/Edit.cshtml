@@ -1,0 +1,61 @@
+﻿@model Model.EF.TbDotthi
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <title>Sửa thông tin đợt thi</title>
+</head>
+<body>
+    @section header{
+        <h1>
+            Sửa thông tin đợt thi
+            <small>Control panel</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Sửa thông tin đợt thi</li>
+        </ol>
+    }
+
+
+    @using (Html.BeginForm("Edit","Dt",FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>Sửa thông tin đợt thi</legend>
+
+            @Html.HiddenFor(model => model.MaDT)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TenDT)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.TenDT,new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TenDT)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.TrangThai)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.TrangThai,new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TrangThai)
+            </div>
+
+            <p>
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </p>
+        </fieldset>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>
